@@ -70,7 +70,7 @@ function RouteComponent() {
                     day: "numeric",
                   })}
                 </p>
-                <h1 className="bg-(image:--brand-text-gradient) bg-clip-text font-semibold text-3xl text-transparent tracking-tight">
+                <h1 className="bg-(image:--brand-text-gradient) bg-clip-text font-semibold text-3xl text-transparent tracking-tight forced-colors:text-[CanvasText]">
                   {greetings[getDayPart()]}
                 </h1>
               </div>
