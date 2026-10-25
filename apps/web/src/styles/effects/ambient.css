@@ -1,0 +1,69 @@
+/* Aurora fields behind page content (AmbientBackdrop). Plain radial
+   gradients, no blur filters, so they cost one paint; at full effects they
+   drift with transform-only animations that stay on the compositor. */
+[data-ambient-blob] {
+  position: absolute;
+  width: 60vmax;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(
+    closest-side,
+    color-mix(in oklab, var(--blob-colour) var(--ambient-strength), transparent),
+    transparent
+  );
+}
+
+[data-ambient-blob="violet"] {
+  --blob-colour: var(--aurora-violet);
+  top: -30vmax;
+  left: -15vmax;
+}
+
+[data-ambient-blob="sky"] {
+  --blob-colour: var(--aurora-sky);
+  top: -25vmax;
+  right: -25vmax;
+}
+
+[data-ambient-blob="fuchsia"] {
+  --blob-colour: var(--aurora-fuchsia);
+  bottom: -40vmax;
+  left: 25%;
+}
+
+:root[data-effects="off"] [data-slot="ambient-backdrop"] {
+  display: none;
+}
+
+:root[data-effects="full"] [data-ambient-blob="violet"] {
+  animation: effects-drift-a 28s var(--ease-in-out) infinite alternate;
+}
+
+:root[data-effects="full"] [data-ambient-blob="sky"] {
+  animation: effects-drift-b 34s var(--ease-in-out) infinite alternate;
+}
+
+:root[data-effects="full"] [data-ambient-blob="fuchsia"] {
+  animation: effects-drift-c 40s var(--ease-in-out) infinite alternate;
+}
+
+@keyframes effects-drift-a {
+  to {
+    translate: 12vmax 8vmax;
+    scale: 1.15;
+  }
+}
+
+@keyframes effects-drift-b {
+  to {
+    translate: -14vmax 10vmax;
+    scale: 0.9;
+  }
+}
+
+@keyframes effects-drift-c {
+  to {
+    translate: -10vmax -12vmax;
+    scale: 1.2;
+  }
+}
