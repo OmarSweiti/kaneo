@@ -1,0 +1,52 @@
+# Checks for this personal fork. Upstream's ci.yml runs on Blacksmith
+# runners that only exist for the usekaneo organisation, so here it is
+# disabled in the Actions settings and this workflow runs a lighter set of
+# checks on GitHub-hosted runners instead. A separate file keeps upstream
+# merges free of conflicts.
+name: Fork CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: fork-ci-${{ github.ref }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
+
+permissions:
+  contents: read
+
+jobs:
+  web:
+    name: Lint, typecheck, test and build (web)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: pnpm/action-setup@ea17c68df8912ef543352723c149a84f56e3d413 # v6.1.0
+        with:
+          version: 10.32.1
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
+        with:
+          node-version: 24.19.0
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - name: Lint and format
+        run: pnpm lint
+      - name: Locales in sync
+        run: pnpm i18n:check
+      # Upstream's build:dependencies filter (@kaneo/*^...) matches nothing
+      # under vite-plus 1.0, so build the web app's workspace dependencies
+      # explicitly.
+      - name: Build workspace dependencies
+        run: pnpm exec vp run --filter "@kaneo/web^..." build
+      - name: Typecheck
+        run: pnpm --filter @kaneo/web typecheck
+      - name: Unit tests
+        run: pnpm --filter @kaneo/web test
+      - name: Production build
+        run: pnpm --filter @kaneo/web build
