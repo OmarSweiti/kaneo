@@ -4,6 +4,7 @@ import { LanguageRow } from "@/components/settings/preferences/language-row";
 import { PreferenceSwitchRow } from "@/components/settings/preferences/preference-switch-row";
 import { WeekStartRow } from "@/components/settings/preferences/week-start-row";
 import { SettingsCard } from "@/components/settings/settings-card";
+import { VisualEffectsRow } from "@/components/settings/preferences/visual-effects-row";
 import { SettingsSection } from "@/components/settings/settings-section";
 import { useUserPreferencesStore } from "@/store/user-preferences";
 
@@ -28,6 +29,7 @@ export function GeneralPreferencesSection() {
         <LanguageRow />
         <WeekStartRow />
         <DefaultViewRow />
+        <VisualEffectsRow />
         <PreferenceSwitchRow
           title={t("settings:preferencesPage.projectBackgrounds")}
           description={t(
