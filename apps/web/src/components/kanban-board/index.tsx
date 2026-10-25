@@ -39,6 +39,8 @@ import type { ProjectWithTasks } from "@/types/project";
 import BulkToolbar from "../bulk-selection/bulk-toolbar";
 import Column from "./column";
 import TaskCard from "./task-card";
+import { celebrateTask } from "./celebrate-task";
+import { isCompletionMove } from "./is-completion-move";
 import { useCardTilt } from "./use-card-tilt";
 
 type KanbanBoardProps = {
@@ -147,6 +149,7 @@ function KanbanBoard({
   );
 
   const reduceMotion = useReducedMotion();
+  const visualEffects = useVisualEffects();
   const dropAnimation: DropAnimation = {
     sideEffects: defaultDropAnimationSideEffects({
       styles: {
@@ -221,6 +224,11 @@ function KanbanBoard({
       expectedTasks: moved.expectedTasks,
       previousBoard: canonical,
     });
+    if (
+      visualEffects === "full" &&
+      isCompletionMove(canonical, moved.project, activeId)
+    )
+      celebrateTask(activeId);
   };
 
   const handleDragEnd = ({ active, over }: DragEndEvent) => {
@@ -251,7 +259,6 @@ function KanbanBoard({
   });
 
   const boardRef = useRef<HTMLDivElement>(null);
-  const visualEffects = useVisualEffects();
   // Gated on the columns being rendered so the listener attaches once the
   // board element exists, and on no drag being in progress.
   useCardTilt(
