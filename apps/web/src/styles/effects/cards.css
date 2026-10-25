@@ -1,0 +1,56 @@
+/* "Border beam": a light that travels around a card's edge on hover, drawn
+   as a conic gradient masked to a 1px ring. The angle is a registered
+   property so it can animate; the animation only runs while hovered, so
+   idle cards cost nothing. */
+@property --beam-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+:root[data-effects="full"] [data-slot="project-card"] {
+  position: relative;
+  transition:
+    translate 300ms var(--ease-spring),
+    box-shadow 250ms var(--ease-out),
+    background-color 150ms var(--ease-out);
+}
+
+:root[data-effects="full"] [data-slot="project-card"]:hover {
+  translate: 0 -3px;
+  box-shadow: 0 16px 32px -16px var(--brand-glow);
+}
+
+:root[data-effects="full"] [data-slot="project-card"]::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  padding: 1px;
+  border-radius: inherit;
+  pointer-events: none;
+  background: conic-gradient(
+    from var(--beam-angle),
+    transparent 55%,
+    var(--aurora-violet),
+    var(--aurora-sky),
+    var(--aurora-fuchsia),
+    transparent 95%
+  );
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 300ms var(--ease-out);
+}
+
+:root[data-effects="full"] [data-slot="project-card"]:hover::before {
+  opacity: 1;
+  animation: effects-beam 2.4s linear infinite;
+}
+
+@keyframes effects-beam {
+  to {
+    --beam-angle: 360deg;
+  }
+}
