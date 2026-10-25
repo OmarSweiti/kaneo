@@ -1,0 +1,39 @@
+# Netlify builds and serves the web app. The API runs on Render and the
+# database on Supabase; DEPLOY.md describes the whole setup.
+
+[build]
+command = "pnpm exec vp run --filter \"@kaneo/web^...\" build && pnpm --filter @kaneo/web build"
+publish = "apps/web/dist"
+
+[build.environment]
+NODE_VERSION = "24.19.0"
+PNPM_VERSION = "10.32.1"
+# Public values baked into the browser bundle; never put secrets here.
+# They override the container placeholders in apps/web/.env.production,
+# which only Kaneo's Docker image replaces at start.
+VITE_API_URL = "https://perfect-coders-checklist-api.onrender.com"
+VITE_CLIENT_URL = "https://perfect-coders-checklist.netlify.app"
+VITE_TURNSTILE_SITE_KEY = ""
+VITE_SENTRY_DSN = ""
+
+# Single-page app: a path with no matching file serves index.html, and the
+# router takes it from there.
+[[redirects]]
+from = "/*"
+to = "/index.html"
+status = 200
+
+[[headers]]
+for = "/*"
+[headers.values]
+X-Content-Type-Options = "nosniff"
+X-Frame-Options = "DENY"
+Referrer-Policy = "strict-origin-when-cross-origin"
+Permissions-Policy = "camera=(), microphone=(), geolocation=(), payment=()"
+Strict-Transport-Security = "max-age=31536000; includeSubDomains"
+
+# Vite fingerprints everything under /assets, so it can be cached forever.
+[[headers]]
+for = "/assets/*"
+[headers.values]
+Cache-Control = "public, max-age=31536000, immutable"
