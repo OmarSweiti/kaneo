@@ -67,3 +67,8 @@
     scale: 1.2;
   }
 }
+
+/* Sign-in and sign-up: the panel rises in over the 3D scene. */
+:root[data-effects="full"] [data-slot="auth-panel"] {
+  animation: effects-rise 700ms var(--ease-out) 150ms backwards;
+}
