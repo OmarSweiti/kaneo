@@ -368,7 +368,10 @@ function KanbanBoard({
       </div>
       <DragOverlay dropAnimation={reduceMotion ? null : dropAnimation}>
         {activeTask ? (
-          <div className="rotate-1 scale-[1.03] shadow-lg transition-[rotate,scale] duration-150 ease-out starting:rotate-0 starting:scale-100 motion-reduce:transition-none">
+          <div
+            data-slot="task-drag-overlay"
+            className="rotate-1 scale-[1.03] shadow-lg transition-[rotate,scale] duration-150 ease-out starting:rotate-0 starting:scale-100 motion-reduce:transition-none"
+          >
             <div className="ring-2 ring-ring/35 rounded-lg">
               <TaskCard task={activeTask} isFinalColumn={activeIsFinal} />
             </div>

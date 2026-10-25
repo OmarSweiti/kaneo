@@ -92,6 +92,7 @@ function Column({
     >
       <span
         aria-hidden
+        data-slot="board-column-bar"
         className="pointer-events-none absolute inset-x-4 top-0 h-0.5 rounded-full bg-(--column-accent) opacity-80"
       />
       <div className="shrink-0 pt-1 pr-2 pl-3">
