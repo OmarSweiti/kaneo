@@ -1,4 +1,5 @@
 import { useTranslation } from "react-i18next";
+import { AnimatedList } from "@/components/effects/animated-list";
 import { Skeleton } from "@/components/ui/skeleton";
 import useGetWorkspaceActivities from "@/hooks/queries/activity/use-get-workspace-activities";
 import { ActivityFeedItem } from "./activity-feed-item";
@@ -43,7 +44,7 @@ export function ActivityFeed({ workspaceId }: ActivityFeedProps) {
           {t("workspace:home.activity.empty")}
         </p>
       ) : (
-        <ul className="flex flex-col gap-4 pt-4">
+        <AnimatedList className="flex flex-col gap-4 pt-4">
           {activities.slice(0, VISIBLE_ACTIVITIES).map((activity) => (
             <ActivityFeedItem
               key={activity.id}
@@ -51,7 +52,7 @@ export function ActivityFeed({ workspaceId }: ActivityFeedProps) {
               workspaceId={workspaceId}
             />
           ))}
-        </ul>
+        </AnimatedList>
       )}
     </section>
   );

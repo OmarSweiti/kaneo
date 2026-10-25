@@ -10,6 +10,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+import { AnimatedList } from "@/components/effects/animated-list";
 import { Button } from "@/components/ui/button";
 import useClearNotifications from "@/hooks/mutations/notification/use-clear-notifications";
 import useMarkAllNotificationsAsRead from "@/hooks/mutations/notification/use-mark-all-notifications-as-read";
@@ -155,7 +156,7 @@ export function InboxList({
               <h2 className="px-5 pt-3.5 pb-1.5 font-medium text-muted-foreground text-xs">
                 {group.title}
               </h2>
-              <ul className="flex flex-col gap-0.5 px-2">
+              <AnimatedList className="flex flex-col gap-0.5 px-2">
                 {group.items.map((notification) => (
                   <InboxListItem
                     key={notification.id}
@@ -164,7 +165,7 @@ export function InboxList({
                     onSelect={onSelect}
                   />
                 ))}
-              </ul>
+              </AnimatedList>
             </section>
           ))
         )}
