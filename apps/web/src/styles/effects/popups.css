@@ -1,0 +1,189 @@
+/* Floating surfaces: Base UI marks enter/exit with data-starting-style and
+   data-ending-style and waits for these transitions before unmounting. */
+:root[data-effects="full"]
+  :is(
+    [data-slot="menu-popup"],
+    [data-slot="menu-sub-content"],
+    [data-slot="context-menu-content"],
+    [data-slot="select-popup"],
+    [data-slot="popover-popup"],
+    [data-slot="combobox-popup"],
+    [data-slot="autocomplete-popup"],
+    [data-slot="preview-card-content"]
+  ) {
+  transition-property: scale, opacity, translate, filter;
+  transition-duration: 280ms;
+  transition-timing-function: var(--ease-spring-soft);
+}
+
+:root[data-effects="full"]
+  :is(
+    [data-slot="menu-popup"],
+    [data-slot="menu-sub-content"],
+    [data-slot="context-menu-content"],
+    [data-slot="select-popup"],
+    [data-slot="popover-popup"],
+    [data-slot="combobox-popup"],
+    [data-slot="autocomplete-popup"],
+    [data-slot="preview-card-content"]
+  ):is([data-starting-style], [data-ending-style]) {
+  scale: 0.9;
+  filter: blur(4px);
+}
+
+:root[data-effects="full"]
+  :is(
+    [data-slot="menu-popup"],
+    [data-slot="menu-sub-content"],
+    [data-slot="context-menu-content"],
+    [data-slot="select-popup"],
+    [data-slot="popover-popup"],
+    [data-slot="combobox-popup"],
+    [data-slot="autocomplete-popup"],
+    [data-slot="preview-card-content"]
+  )[data-ending-style] {
+  transition-duration: 140ms;
+  transition-timing-function: var(--ease-out);
+}
+
+:root[data-effects="full"] [data-slot="tooltip-popup"] {
+  transition-property: scale, opacity, translate, filter;
+  transition-duration: 220ms;
+  transition-timing-function: var(--ease-spring);
+}
+
+:root[data-effects="full"]
+  [data-slot="tooltip-popup"]:is([data-starting-style], [data-ending-style]) {
+  scale: 0.85;
+  filter: blur(2px);
+}
+
+/* Dialogs rise in from slightly below with a blurred backdrop. */
+:root[data-effects="full"]
+  :is(
+    [data-slot="dialog-popup"],
+    [data-slot="alert-dialog-popup"],
+    [data-slot="command-dialog-popup"]
+  ) {
+  transition-property: scale, opacity, translate, filter;
+  transition-duration: 380ms;
+  transition-timing-function: var(--ease-spring-soft);
+}
+
+:root[data-effects="full"]
+  :is(
+    [data-slot="dialog-popup"],
+    [data-slot="alert-dialog-popup"],
+    [data-slot="command-dialog-popup"]
+  ):is([data-starting-style], [data-ending-style]) {
+  scale: 0.92;
+  translate: 0 14px;
+  filter: blur(6px);
+}
+
+:root[data-effects="full"]
+  :is(
+    [data-slot="dialog-popup"],
+    [data-slot="alert-dialog-popup"],
+    [data-slot="command-dialog-popup"]
+  )[data-ending-style] {
+  transition-duration: 160ms;
+  transition-timing-function: var(--ease-out);
+}
+
+:root[data-effects="full"]
+  :is(
+    [data-slot="dialog-backdrop"],
+    [data-slot="alert-dialog-backdrop"],
+    [data-slot="command-dialog-backdrop"],
+    [data-slot="sheet-backdrop"]
+  ) {
+  backdrop-filter: blur(6px) saturate(140%);
+}
+
+/* Items rise in one after another when a list opens. */
+:root[data-effects="full"]
+  :is(
+    [data-slot="menu-popup"],
+    [data-slot="menu-sub-content"],
+    [data-slot="context-menu-content"],
+    [data-slot="select-popup"]
+  )
+  :is(
+    [data-slot$="-item"],
+    [data-slot="menu-sub-trigger"],
+    [data-slot="context-menu-sub-trigger"]
+  ) {
+  animation: effects-rise 300ms var(--ease-out) backwards;
+}
+
+:root[data-effects="full"]
+  :is(
+    [data-slot="menu-popup"],
+    [data-slot="menu-sub-content"],
+    [data-slot="context-menu-content"],
+    [data-slot="select-popup"]
+  )
+  :is([data-slot$="-item"], [data-slot$="-sub-trigger"]) {
+  &:nth-child(2) {
+    animation-delay: 20ms;
+  }
+  &:nth-child(3) {
+    animation-delay: 40ms;
+  }
+  &:nth-child(4) {
+    animation-delay: 60ms;
+  }
+  &:nth-child(5) {
+    animation-delay: 80ms;
+  }
+  &:nth-child(6) {
+    animation-delay: 100ms;
+  }
+  &:nth-child(7) {
+    animation-delay: 120ms;
+  }
+  &:nth-child(n + 8) {
+    animation-delay: 140ms;
+  }
+}
+
+/* Highlighted rows carry a violet wash in every effects level. */
+:is(
+  [data-slot="menu-item"],
+  [data-slot="menu-checkbox-item"],
+  [data-slot="menu-radio-item"],
+  [data-slot="menu-sub-trigger"],
+  [data-slot="context-menu-item"],
+  [data-slot="select-item"],
+  [data-slot="combobox-item"],
+  [data-slot="autocomplete-item"],
+  [data-slot="command-item"]
+)[data-highlighted]:not([data-variant="destructive"]) {
+  background-image: linear-gradient(
+    90deg,
+    color-mix(in oklab, var(--aurora-violet) 24%, transparent),
+    color-mix(in oklab, var(--aurora-sky) 8%, transparent)
+  );
+}
+
+:root[data-effects="full"]
+  :is(
+    [data-slot="menu-item"],
+    [data-slot="context-menu-item"],
+    [data-slot="command-item"]
+  )
+  > svg:first-child {
+  transition: translate 240ms var(--ease-spring), color 150ms var(--ease-out);
+}
+
+:root[data-effects="full"]
+  :is(
+    [data-slot="menu-item"],
+    [data-slot="context-menu-item"],
+    [data-slot="command-item"]
+  )[data-highlighted]
+  > svg:first-child {
+  translate: 2px 0;
+  color: var(--aurora-violet);
+}

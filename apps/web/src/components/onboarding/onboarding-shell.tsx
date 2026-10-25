@@ -1,6 +1,8 @@
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import type { ReactNode } from "react";
 import { useTranslation } from "react-i18next";
+import { AmbientBackdrop } from "../effects/ambient-backdrop";
+import { ParticleField } from "../effects/particle-field";
 import { OnboardingProgress } from "./onboarding-progress";
 
 type OnboardingShellProps = {
@@ -33,7 +35,9 @@ export function OnboardingShell({
   const offset = reduceMotion ? 0 : 12;
 
   return (
-    <div className="flex h-svh w-full overflow-hidden bg-background">
+    <div className="relative isolate flex h-svh w-full overflow-hidden bg-background">
+      <AmbientBackdrop />
+      <ParticleField className="absolute inset-0 -z-10" />
       <motion.div
         animate={{ opacity: opening ? 0 : 1 }}
         transition={{ duration: 0.3 }}

@@ -3869,6 +3869,24 @@
 						"sidebarDefaultDescription": {
 							"type": "string"
 						},
+						"visualEffects": {
+							"type": "string"
+						},
+						"visualEffectsDescription": {
+							"type": "string"
+						},
+						"selectVisualEffects": {
+							"type": "string"
+						},
+						"visualEffectsFull": {
+							"type": "string"
+						},
+						"visualEffectsReduced": {
+							"type": "string"
+						},
+						"visualEffectsOff": {
+							"type": "string"
+						},
 						"displayOptions": {
 							"type": "string"
 						},
@@ -3940,6 +3958,12 @@
 						"gantt",
 						"sidebarDefault",
 						"sidebarDefaultDescription",
+						"visualEffects",
+						"visualEffectsDescription",
+						"selectVisualEffects",
+						"visualEffectsFull",
+						"visualEffectsReduced",
+						"visualEffectsOff",
 						"displayOptions",
 						"displayOptionsDescription",
 						"taskNumbers",

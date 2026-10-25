@@ -97,10 +97,14 @@ export function NavMain() {
                 <span>{item.title}</span>
                 {item.count ? (
                   <span
+                    // Keyed by count so the pop animation replays on change.
+                    key={item.count}
+                    data-slot="nav-count"
+                    data-emphasized={item.emphasizeCount ? "" : undefined}
                     className={cn(
                       "ml-auto flex h-4.5 min-w-4.5 shrink-0 items-center justify-center rounded-full px-1 text-[11px] tabular-nums",
                       item.emphasizeCount
-                        ? "bg-foreground font-semibold text-background"
+                        ? "bg-(image:--brand-gradient) font-semibold text-white shadow-[0_0_12px_-2px_var(--brand-glow)]"
                         : "font-medium text-muted-foreground",
                     )}
                   >

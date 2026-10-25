@@ -128,6 +128,7 @@ function TaskCardContent({
             onPointerUp={() => setIsPressed(false)}
             onPointerLeave={() => setIsPressed(false)}
             onPointerCancel={() => setIsPressed(false)}
+            data-slot="task-card"
             className={cn(
               "group relative flex flex-col rounded-[10px] border p-3 transition-[background-color,border-color,box-shadow,scale] duration-150 ease-out",
               isPressed && "scale-[0.98]",

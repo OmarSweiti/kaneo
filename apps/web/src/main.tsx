@@ -12,6 +12,7 @@ import { SequenceHint } from "./components/shortcuts/sequence-hint";
 import { ShortcutsPanel } from "./components/shortcuts/shortcuts-panel";
 import AuthProvider from "./components/providers/auth-provider";
 import { ThemeProvider } from "./components/providers/theme-provider";
+import { VisualEffectsProvider } from "./components/providers/visual-effects-provider";
 import { ErrorBoundary } from "./components/ui/error-boundary";
 import { ShortcutListener } from "./lib/shortcuts/shortcut-listener";
 import { captureCheckoutIntent } from "./lib/checkout-intent";
@@ -99,14 +100,16 @@ if (!rootElement.innerHTML) {
       <ErrorBoundary fallback={RootCrashFallback}>
         <QueryClientProvider client={queryClient}>
           <ThemeProvider>
-            <AuthProvider>
-              <AppI18nProvider>
-                <ShortcutListener />
-                <App />
-                <ShortcutsPanel />
-                <SequenceHint />
-              </AppI18nProvider>
-            </AuthProvider>
+            <VisualEffectsProvider>
+              <AuthProvider>
+                <AppI18nProvider>
+                  <ShortcutListener />
+                  <App />
+                  <ShortcutsPanel />
+                  <SequenceHint />
+                </AppI18nProvider>
+              </AuthProvider>
+            </VisualEffectsProvider>
           </ThemeProvider>
         </QueryClientProvider>
       </ErrorBoundary>

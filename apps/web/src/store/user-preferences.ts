@@ -1,5 +1,9 @@
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
+import {
+  isVisualEffectsLevel,
+  type VisualEffectsLevel,
+} from "@/lib/visual-effects";
 
 export const WEEK_START_DAYS = [0, 1, 6] as const;
 export type WeekStartDay = (typeof WEEK_START_DAYS)[number];
@@ -58,6 +62,9 @@ type UserPreferencesStore = {
 
   weekStartsOn: WeekStartDay;
   setWeekStartsOn: (weekStartsOn: WeekStartDay) => void;
+
+  visualEffects: VisualEffectsLevel;
+  setVisualEffects: (visualEffects: VisualEffectsLevel) => void;
 };
 
 export const useUserPreferencesStore = create<UserPreferencesStore>()(
@@ -152,6 +159,9 @@ export const useUserPreferencesStore = create<UserPreferencesStore>()(
 
       weekStartsOn: 0,
       setWeekStartsOn: (weekStartsOn) => set({ weekStartsOn }),
+
+      visualEffects: "full",
+      setVisualEffects: (visualEffects) => set({ visualEffects }),
     }),
     {
       name: "user-preferences",
@@ -159,6 +169,9 @@ export const useUserPreferencesStore = create<UserPreferencesStore>()(
       onRehydrateStorage: () => (state) => {
         if (state && !isWeekStartDay(state.weekStartsOn)) {
           state.setWeekStartsOn(0);
+        }
+        if (state && !isVisualEffectsLevel(state.visualEffects)) {
+          state.setVisualEffects("full");
         }
       },
     },

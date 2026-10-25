@@ -79,12 +79,13 @@ export function HomeProjects({
                 key={project.id}
                 to="/dashboard/workspace/$workspaceId/project/$projectId/board"
                 params={{ workspaceId, projectId: project.id }}
+                data-slot="project-card"
                 className="flex flex-col gap-3.5 rounded-lg border border-border p-3.5 outline-none transition-colors hover:bg-accent/40 focus-visible:ring-2 focus-visible:ring-ring"
               >
                 <div className="flex items-center gap-2">
                   <ProjectIcon
                     aria-hidden="true"
-                    className="size-4 shrink-0 text-muted-foreground"
+                    className="size-4 shrink-0 text-aurora-violet"
                   />
                   <span className="min-w-0 flex-1 truncate font-medium text-foreground text-sm">
                     {project.name}
@@ -95,7 +96,7 @@ export function HomeProjects({
                 </div>
                 <div className="h-1 overflow-hidden rounded-full bg-muted">
                   <div
-                    className="h-full rounded-full bg-foreground/80"
+                    className="h-full rounded-full bg-(image:--brand-gradient)"
                     style={{ width: `${completionPercentage}%` }}
                   />
                 </div>

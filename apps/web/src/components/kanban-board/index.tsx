@@ -26,9 +26,10 @@ import { findTaskColumn } from "./drag-preview/find-task-column";
 import { moveBoardTask } from "./move-task";
 import { useDragPreview } from "./drag-preview/use-drag-preview";
 import { useReducedMotion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useTaskViewShortcuts } from "@/components/project/task-view-keys/use-task-view-shortcuts";
 import { useProjectBackground } from "@/hooks/use-project-background";
+import { useVisualEffects } from "@/hooks/use-visual-effects";
 import { cn } from "@/lib/cn";
 import { EASE_OUT_CSS } from "@/lib/motion";
 import { useBackgroundStore } from "@/store/background";
@@ -38,6 +39,9 @@ import type { ProjectWithTasks } from "@/types/project";
 import BulkToolbar from "../bulk-selection/bulk-toolbar";
 import Column from "./column";
 import TaskCard from "./task-card";
+import { celebrateTask } from "./celebrate-task";
+import { isCompletionMove } from "./is-completion-move";
+import { useCardTilt } from "./use-card-tilt";
 
 type KanbanBoardProps = {
   project: ProjectWithTasks;
@@ -145,6 +149,7 @@ function KanbanBoard({
   );
 
   const reduceMotion = useReducedMotion();
+  const visualEffects = useVisualEffects();
   const dropAnimation: DropAnimation = {
     sideEffects: defaultDropAnimationSideEffects({
       styles: {
@@ -219,6 +224,11 @@ function KanbanBoard({
       expectedTasks: moved.expectedTasks,
       previousBoard: canonical,
     });
+    if (
+      visualEffects === "full" &&
+      isCompletionMove(canonical, moved.project, activeId)
+    )
+      celebrateTask(activeId);
   };
 
   const handleDragEnd = ({ active, over }: DragEndEvent) => {
@@ -247,6 +257,14 @@ function KanbanBoard({
     canMove: !disableDragDrop,
     onMove: (taskId, overId) => commitMove(taskId, overId),
   });
+
+  const boardRef = useRef<HTMLDivElement>(null);
+  // Gated on the columns being rendered so the listener attaches once the
+  // board element exists, and on no drag being in progress.
+  useCardTilt(
+    boardRef,
+    visualEffects === "full" && activeId === null && !!project?.columns,
+  );
 
   if (!project?.columns) {
     return (
@@ -323,7 +341,10 @@ function KanbanBoard({
             activeId === null && "snap-x snap-mandatory sm:snap-none",
           )}
         >
-          <div className="flex h-full min-w-max gap-4 px-4 py-4 md:px-5">
+          <div
+            ref={boardRef}
+            className="flex h-full min-w-max gap-4 px-4 py-4 md:px-5"
+          >
             {(dragPreview.preview ?? project).columns.map((column) => (
               <div
                 key={column.id}
@@ -354,7 +375,10 @@ function KanbanBoard({
       </div>
       <DragOverlay dropAnimation={reduceMotion ? null : dropAnimation}>
         {activeTask ? (
-          <div className="rotate-1 scale-[1.03] shadow-lg transition-[rotate,scale] duration-150 ease-out starting:rotate-0 starting:scale-100 motion-reduce:transition-none">
+          <div
+            data-slot="task-drag-overlay"
+            className="rotate-1 scale-[1.03] shadow-lg transition-[rotate,scale] duration-150 ease-out starting:rotate-0 starting:scale-100 motion-reduce:transition-none"
+          >
             <div className="ring-2 ring-ring/35 rounded-lg">
               <TaskCard task={activeTask} isFinalColumn={activeIsFinal} />
             </div>

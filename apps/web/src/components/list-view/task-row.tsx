@@ -171,6 +171,7 @@ function TaskRow({ task, projectSlug }: TaskRowProps) {
               "group relative flex h-10 cursor-pointer items-center gap-3 px-3.5 outline-none transition-colors",
               isTaskSelected ? "bg-accent/45" : "hover:bg-accent/60",
             )}
+            data-slot="task-row"
             data-task-id={task.id}
             data-shortcut-surface
             {...attributes}

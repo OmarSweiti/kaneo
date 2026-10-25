@@ -1,0 +1,53 @@
+/* The active sidebar row gets an accent bar and a violet wash at every
+   level. Both are background layers, so the focus ring (a box-shadow) is
+   untouched. */
+[data-slot="sidebar-menu-button"][data-active="true"] {
+  background-image:
+    linear-gradient(var(--aurora-violet), var(--aurora-violet)),
+    linear-gradient(
+      90deg,
+      color-mix(in oklab, var(--aurora-violet) 20%, transparent),
+      color-mix(in oklab, var(--aurora-sky) 4%, transparent)
+    );
+  background-repeat: no-repeat;
+  background-size:
+    2px 55%,
+    100% 100%;
+  background-position:
+    0 50%,
+    0 0;
+}
+
+[data-slot="sidebar-menu-button"][data-active="true"] > svg {
+  color: var(--aurora-violet);
+}
+
+:root[data-effects="full"] [data-slot="sidebar-menu-button"] > svg {
+  transition:
+    translate 260ms var(--ease-spring),
+    scale 260ms var(--ease-spring),
+    color 150ms var(--ease-out);
+}
+
+:root[data-effects="full"] [data-slot="sidebar-menu-button"]:hover > svg {
+  translate: 2px 0;
+  scale: 1.1;
+  color: var(--aurora-violet);
+}
+
+:root[data-effects="full"]
+  [data-slot="sidebar-menu-button"][data-active="true"] {
+  animation: effects-nav-activate 420ms var(--ease-out);
+}
+
+@keyframes effects-nav-activate {
+  from {
+    background-size:
+      2px 0%,
+      0% 100%;
+  }
+}
+
+:root[data-effects="full"] [data-slot="nav-count"][data-emphasized] {
+  animation: effects-pop 420ms var(--ease-spring) backwards;
+}

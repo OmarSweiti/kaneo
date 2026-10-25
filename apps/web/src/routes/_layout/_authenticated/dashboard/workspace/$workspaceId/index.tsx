@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { TrialExpiredCallout } from "@/components/billing/trial-expired-callout";
 import WorkspaceLayout from "@/components/common/workspace-layout";
+import { HeroScene } from "@/components/effects/hero-scene";
 import { ActivityFeed } from "@/components/home/activity-feed";
 import { getDayPart } from "@/components/home/day-part";
 import { HomeProjects } from "@/components/home/home-projects";
@@ -56,7 +57,11 @@ function RouteComponent() {
         <div className="h-full overflow-y-auto">
           <TrialExpiredCallout workspaceId={workspaceId} className="m-4" />
           <div className="mx-auto flex w-full max-w-5xl flex-col gap-9 px-4 py-6 sm:px-6 sm:py-10 lg:px-10">
-            <header className="flex items-end justify-between gap-4">
+            <header className="relative flex items-end justify-between gap-4">
+              <HeroScene
+                variant="banner"
+                className="-z-10 -top-12 absolute right-32 hidden h-44 w-96 md:block"
+              />
               <div className="flex flex-col gap-1.5">
                 <p className="font-medium text-[13px] text-muted-foreground">
                   {formatDate(new Date(day), {
@@ -65,7 +70,7 @@ function RouteComponent() {
                     day: "numeric",
                   })}
                 </p>
-                <h1 className="font-semibold text-3xl text-foreground tracking-tight">
+                <h1 className="bg-(image:--brand-text-gradient) bg-clip-text font-semibold text-3xl text-transparent tracking-tight forced-colors:text-[CanvasText]">
                   {greetings[getDayPart()]}
                 </h1>
               </div>

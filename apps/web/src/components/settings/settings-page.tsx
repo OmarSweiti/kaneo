@@ -18,6 +18,7 @@ export function SettingsPage({
 }: SettingsPageProps) {
   return (
     <div
+      data-slot="settings-page"
       className={cn(
         "mx-auto w-full max-w-3xl space-y-10 px-4 py-8 sm:px-8 sm:py-10",
         className,

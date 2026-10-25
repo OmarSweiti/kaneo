@@ -1,0 +1,113 @@
+/* Switches, checkboxes and radios read as "on" in the brand gradient. */
+[data-slot="switch"][data-checked] {
+  background-image: var(--brand-gradient);
+}
+
+:root[data-effects="full"] [data-slot="switch-thumb"] {
+  transition:
+    translate 420ms var(--ease-spring),
+    border-radius 150ms var(--ease-out),
+    scale 100ms 100ms var(--ease-out),
+    transform-origin 150ms var(--ease-out);
+}
+
+:root[data-effects="full"] [data-slot="checkbox-indicator"] {
+  transition-duration: 320ms;
+  transition-timing-function: var(--ease-spring);
+}
+
+:root[data-effects="full"] [data-slot="checkbox-indicator"][data-unchecked] {
+  scale: 0.4;
+}
+
+/* Radio indicators are display:none while unchecked, so they pop in with an
+   animation rather than a transition. */
+:root[data-effects="full"] [data-slot="radio-indicator"][data-checked] {
+  animation: effects-pop 320ms var(--ease-spring);
+}
+
+/* Tabs: the active-tab indicator springs between tabs. */
+:root[data-effects="full"] [data-slot="tab-indicator"] {
+  transition-duration: 380ms;
+  transition-timing-function: var(--ease-spring-soft);
+}
+
+/* Progress, meters and sliders fill with the brand gradient; at full
+   effects a highlight travels along the filled part. */
+:is(
+  [data-slot="progress-indicator"],
+  [data-slot="meter-indicator"],
+  [data-slot="slider-indicator"]
+) {
+  background-image: var(--brand-gradient);
+}
+
+:root[data-effects="full"]
+  :is([data-slot="progress-indicator"], [data-slot="meter-indicator"]) {
+  background-image:
+    linear-gradient(
+      100deg,
+      transparent 30%,
+      rgb(255 255 255 / 0.35) 50%,
+      transparent 70%
+    ),
+    var(--brand-gradient);
+  background-repeat: no-repeat;
+  background-size:
+    200% 100%,
+    100% 100%;
+  animation: effects-progress-sheen 2.4s var(--ease-in-out) infinite;
+}
+
+@keyframes effects-progress-sheen {
+  from {
+    background-position:
+      150% 0,
+      0 0;
+  }
+  to {
+    background-position:
+      -50% 0,
+      0 0;
+  }
+}
+
+:root[data-effects="full"] [data-slot="slider-thumb"] {
+  transition: scale 260ms var(--ease-spring), box-shadow 200ms var(--ease-out);
+}
+
+:root[data-effects="full"] [data-slot="slider-thumb"]:hover {
+  scale: 1.15;
+  box-shadow: 0 0 0 6px color-mix(in oklab, var(--aurora-violet) 20%, transparent);
+}
+
+/* Loading placeholders shimmer with a hint of the palette. */
+:root[data-effects="full"] [data-slot="skeleton"] {
+  background-image: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in oklab, var(--aurora-violet) 10%, transparent),
+    color-mix(in oklab, var(--aurora-sky) 8%, transparent),
+    transparent
+  );
+}
+
+/* Empty-state icons float gently instead of sitting still. */
+:root[data-effects="full"] [data-slot="empty-media"] {
+  animation: effects-float 5s var(--ease-in-out) infinite alternate;
+}
+
+:root[data-effects="full"] [data-slot="empty-media"] svg {
+  color: var(--aurora-violet);
+}
+
+@keyframes effects-float {
+  from {
+    translate: 0 -3px;
+    rotate: -2deg;
+  }
+  to {
+    translate: 0 3px;
+    rotate: 2deg;
+  }
+}
