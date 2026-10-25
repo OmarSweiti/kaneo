@@ -1,0 +1,51 @@
+/* Task cards. The tilt transform only exists while a card is hovered
+   (data-tilting, set by useCardTilt), so resting cards are not promoted to
+   compositor layers; removing it springs the card back flat. */
+:root[data-effects="full"] [data-slot="task-card"] {
+  transition-property:
+    background-color, border-color, box-shadow, scale, translate, transform;
+  transition-duration: 150ms, 150ms, 250ms, 150ms, 300ms, 550ms;
+  transition-timing-function: var(--ease-out), var(--ease-out),
+    var(--ease-out), var(--ease-out), var(--ease-spring),
+    var(--ease-spring-soft);
+}
+
+:root[data-effects="full"] [data-slot="task-card"][data-tilting] {
+  transform: perspective(800px) rotateX(var(--tilt-x, 0deg))
+    rotateY(var(--tilt-y, 0deg));
+  translate: 0 -2px;
+  transition-duration: 150ms, 150ms, 250ms, 150ms, 300ms, 120ms;
+  border-color: color-mix(
+    in oklab,
+    var(--column-accent, var(--aurora-violet)) 45%,
+    transparent
+  );
+  box-shadow:
+    0 14px 28px -14px
+      color-mix(
+        in oklab,
+        var(--column-accent, var(--aurora-violet)) 55%,
+        transparent
+      ),
+    0 2px 6px -2px rgb(0 0 0 / 0.12);
+}
+
+/* A soft light follows the pointer across the hovered card. */
+:root[data-effects="full"] [data-slot="task-card"]::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: radial-gradient(
+    240px circle at var(--spot-x, 50%) var(--spot-y, 50%),
+    color-mix(in oklab, var(--column-accent, var(--aurora-violet)) 18%, transparent),
+    transparent 65%
+  );
+  opacity: 0;
+  transition: opacity 250ms var(--ease-out);
+}
+
+:root[data-effects="full"] [data-slot="task-card"][data-tilting]::before {
+  opacity: 1;
+}
