@@ -54,3 +54,35 @@
     --beam-angle: 360deg;
   }
 }
+
+/* List rows: on hover an accent bar and violet wash appear, drawn as
+   background layers like the active sidebar row. At full effects the bar
+   grows in. */
+[data-slot="task-row"] {
+  background-image:
+    linear-gradient(var(--aurora-violet), var(--aurora-violet)),
+    linear-gradient(
+      90deg,
+      color-mix(in oklab, var(--aurora-violet) 12%, transparent),
+      transparent 60%
+    );
+  background-repeat: no-repeat;
+  background-position:
+    0 50%,
+    0 0;
+  background-size:
+    2px 0%,
+    0% 100%;
+}
+
+[data-slot="task-row"]:hover {
+  background-size:
+    2px 60%,
+    100% 100%;
+}
+
+:root[data-effects="full"] [data-slot="task-row"] {
+  transition:
+    background-color 150ms var(--ease-out),
+    background-size 320ms var(--ease-spring-soft);
+}
