@@ -3,3 +3,4 @@
    effects preference sets and the OS reduced-motion setting caps at
    "reduced". Colour stays in index.css so every level keeps the palette. */
 @import "./motion-tokens.css";
+@import "./buttons.css";

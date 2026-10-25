@@ -1,0 +1,91 @@
+:root[data-effects="full"] [data-slot="button"] {
+  transition-property:
+    box-shadow, scale, translate, filter, background-color, border-color,
+    color, background-position;
+  transition-duration: 200ms, 150ms, 260ms, 200ms, 150ms, 150ms, 150ms, 750ms;
+  transition-timing-function: var(--ease-out), var(--ease-out),
+    var(--ease-spring), var(--ease-out), var(--ease-out), var(--ease-out),
+    var(--ease-out), var(--ease-out);
+}
+
+:root[data-effects="full"]
+  [data-slot="button"]:is(
+    [data-variant="default"],
+    [data-variant="destructive"],
+    [data-variant="outline"],
+    [data-variant="secondary"],
+    [data-variant="destructive-outline"]
+  ):not(:disabled):hover {
+  translate: 0 -1px;
+}
+
+:root[data-effects="full"] [data-slot="button"]:not(:disabled):active {
+  translate: 0 0;
+}
+
+/* A light band sweeps across filled buttons on hover. It is a second
+   background layer, so the button keeps its own ::before and ::after. */
+:root[data-effects="full"] [data-slot="button"][data-variant="default"] {
+  background-image:
+    linear-gradient(
+      110deg,
+      transparent 38%,
+      rgb(255 255 255 / 0.32) 50%,
+      transparent 62%
+    ),
+    var(--brand-gradient);
+  background-repeat: no-repeat;
+  background-size:
+    260% 100%,
+    100% 100%;
+  background-position:
+    130% 0,
+    0 0;
+}
+
+:root[data-effects="full"] [data-slot="button"][data-variant="destructive"] {
+  background-image: linear-gradient(
+    110deg,
+    transparent 38%,
+    rgb(255 255 255 / 0.28) 50%,
+    transparent 62%
+  );
+  background-repeat: no-repeat;
+  background-size: 260% 100%;
+  background-position: 130% 0;
+}
+
+:root[data-effects="full"]
+  [data-slot="button"][data-variant="default"]:not(:disabled):hover {
+  background-position:
+    -30% 0,
+    0 0;
+  box-shadow: 0 10px 28px -8px var(--brand-glow);
+}
+
+:root[data-effects="full"]
+  [data-slot="button"][data-variant="destructive"]:not(:disabled):hover {
+  background-position: -30% 0;
+  box-shadow: 0 10px 28px -8px
+    color-mix(in oklab, var(--destructive) 45%, transparent);
+}
+
+:root[data-effects="full"]
+  [data-slot="button"]:is([data-variant="outline"], [data-variant="secondary"]):not(
+    :disabled
+  ):hover {
+  box-shadow: 0 6px 18px -10px
+    color-mix(in oklab, var(--aurora-violet) 55%, transparent);
+}
+
+:root[data-effects="full"] [data-slot="button"] svg {
+  transition: scale 260ms var(--ease-spring), rotate 260ms var(--ease-spring);
+}
+
+:root[data-effects="full"]
+  [data-slot="button"]:is([data-variant="ghost"], [data-variant="outline"]):not(
+    :disabled
+  ):hover
+  svg {
+  scale: 1.12;
+}
