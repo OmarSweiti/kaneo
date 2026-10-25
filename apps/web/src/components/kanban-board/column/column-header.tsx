@@ -59,13 +59,13 @@ export function ColumnHeader({
   return (
     <div className="flex h-8 items-center justify-between gap-2">
       <div className="flex min-w-0 items-center gap-2">
-        <span className="text-chip-icon">
+        <span className="text-(--column-accent) [&_svg]:text-(--column-accent)">
           {getColumnIcon(column.id, column.isFinal, column.icon)}
         </span>
         <span className="truncate font-medium text-[13px] text-board-title leading-5">
           {column.name}
         </span>
-        <span className="text-board-id text-xs tabular-nums">
+        <span className="rounded-full bg-(--column-accent)/12 px-1.5 text-(--column-accent) text-xs tabular-nums">
           {column.tasks.length}
         </span>
       </div>

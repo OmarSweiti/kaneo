@@ -1,6 +1,7 @@
 import { useDroppable } from "@dnd-kit/core";
 import { cva } from "class-variance-authority";
-import { memo } from "react";
+import { type CSSProperties, memo } from "react";
+import { getColumnAccent } from "@/lib/column-accent";
 import { useBackgroundStore } from "@/store/background";
 import type { ProjectWithTasks } from "@/types/project";
 import { ColumnDropzone } from "./column-dropzone";
@@ -17,7 +18,7 @@ type ColumnProps = {
 };
 
 export const columnVariants = cva(
-  "group relative flex h-full min-h-0 w-full flex-col rounded-xl transition-colors duration-150",
+  "group relative flex h-full min-h-0 w-full flex-col rounded-xl bg-linear-to-b from-[color-mix(in_oklab,var(--column-accent)_7%,transparent)] to-transparent to-40% transition-[background-color,box-shadow] duration-200",
   {
     defaultVariants: {
       isDropzoneOver: false,
@@ -42,7 +43,8 @@ export const columnVariants = cva(
       {
         isDropzoneOver: true,
         backgroundImage: false,
-        class: "bg-board-lane ring-2 ring-board-card-ring",
+        class:
+          "bg-board-lane ring-2 ring-(--column-accent)/45 shadow-[0_0_28px_-6px_var(--column-accent)]",
       },
       {
         isDropzoneOver: false,
@@ -77,11 +79,21 @@ function Column({
   return (
     <div
       ref={setNodeRef}
+      data-slot="board-column"
+      style={
+        {
+          "--column-accent": getColumnAccent(column.id, column.isFinal),
+        } as CSSProperties
+      }
       className={columnVariants({
         isDropzoneOver: isOver,
         backgroundImage: !!background,
       })}
     >
+      <span
+        aria-hidden
+        className="pointer-events-none absolute inset-x-4 top-0 h-0.5 rounded-full bg-(--column-accent) opacity-80"
+      />
       <div className="shrink-0 pt-1 pr-2 pl-3">
         <ColumnHeader
           column={column}
