@@ -1,118 +1,118 @@
-// WebGL cannot read the oklch CSS tokens, so the scene uses the sRGB hex
-// values of the same Tailwind colours behind the aurora palette.
-export const SCENE_COLOURS = {
-  violet: "#8b5cf6",
-  indigo: "#6366f1",
-  sky: "#38bdf8",
-  fuchsia: "#d946ef",
-  amber: "#fbbf24",
-  emerald: "#10b981",
-} as const;
-
-export type ShapeKind =
-  | "icosahedron"
-  | "torusKnot"
-  | "torus"
-  | "sphere"
-  | "octahedron"
-  | "box";
+import { SCENE_COLOURS } from "./colours";
+import type { WorkModel } from "./models";
 
 export type ShapeSpec = {
-  kind: ShapeKind;
+  model: WorkModel;
   colour: string;
   position: [number, number, number];
+  // Resting orientation; the float animation sways around it so the model
+  // keeps facing the viewer and stays recognisable.
+  rotation?: [number, number, number];
   scale: number;
-  // Seconds per float cycle; also offsets the phase so shapes drift apart.
+  // Seconds per float cycle; also offsets the phase so models drift apart.
   speed: number;
-  wireframe?: boolean;
 };
 
 export type HeroSceneVariant = "auth" | "banner";
 
-// "auth" frames a centred sign-in card, so shapes keep to the edges.
+// "auth" frames a centred sign-in panel, so models keep to the edges.
 // "banner" is a short strip beside a page heading.
 export const SCENE_SHAPES: Record<HeroSceneVariant, ShapeSpec[]> = {
   auth: [
     {
-      kind: "torusKnot",
+      model: "taskCard",
       colour: SCENE_COLOURS.violet,
-      position: [-4.6, 1.6, -1],
-      scale: 0.9,
+      position: [-4.3, 1.7, -1],
+      rotation: [0.1, 0.35, -0.08],
+      scale: 0.95,
       speed: 7,
     },
     {
-      kind: "icosahedron",
-      colour: SCENE_COLOURS.sky,
-      position: [4.4, 2.1, -2],
-      scale: 1.1,
+      model: "barChart",
+      colour: SCENE_COLOURS.fuchsia,
+      position: [4.3, 1.8, -1.5],
+      rotation: [0.35, -0.4, 0],
+      scale: 0.9,
       speed: 9,
-      wireframe: true,
     },
     {
-      kind: "sphere",
-      colour: SCENE_COLOURS.fuchsia,
-      position: [4.2, -1.9, 0],
-      scale: 0.75,
+      model: "bug",
+      colour: SCENE_COLOURS.rose,
+      position: [4.2, -1.8, 0],
+      rotation: [0, 0, -0.4],
+      scale: 0.8,
       speed: 6,
     },
     {
-      kind: "box",
-      colour: SCENE_COLOURS.indigo,
-      position: [-4.1, -2.2, 0.5],
-      scale: 0.8,
+      model: "checkBadge",
+      colour: SCENE_COLOURS.emerald,
+      position: [-3.9, -1.7, 0],
+      rotation: [0, 0.3, 0],
+      scale: 0.85,
       speed: 8,
     },
     {
-      kind: "torus",
+      model: "calendar",
       colour: SCENE_COLOURS.amber,
-      position: [-1.9, 3.1, -3],
-      scale: 0.7,
+      position: [-2.1, 3, -3],
+      rotation: [0.1, 0.3, 0.1],
+      scale: 0.75,
       speed: 10,
     },
     {
-      kind: "octahedron",
-      colour: SCENE_COLOURS.emerald,
-      position: [2.1, -3.2, -2.5],
+      model: "stopwatch",
+      colour: SCENE_COLOURS.sky,
+      position: [2.8, 3, -3.5],
+      rotation: [0, -0.3, 0],
       scale: 0.7,
       speed: 7.5,
     },
     {
-      kind: "icosahedron",
-      colour: SCENE_COLOURS.violet,
-      position: [1.6, 3.3, -4],
-      scale: 0.5,
+      model: "kanbanBoard",
+      colour: SCENE_COLOURS.indigo,
+      position: [-1.9, -3.2, -2.5],
+      rotation: [-0.2, 0.2, 0],
+      scale: 0.75,
       speed: 11,
+    },
+    {
+      model: "gear",
+      colour: SCENE_COLOURS.violet,
+      position: [2.2, -3.2, -2.5],
+      scale: 0.7,
+      speed: 9.5,
     },
   ],
   banner: [
     {
-      kind: "torusKnot",
-      colour: SCENE_COLOURS.violet,
-      position: [-2.2, 0.1, 0],
-      scale: 0.75,
+      model: "kanbanBoard",
+      colour: SCENE_COLOURS.indigo,
+      position: [-2.4, 0, 0],
+      rotation: [0, 0.35, 0],
+      scale: 0.78,
+      speed: 9,
+    },
+    {
+      model: "checkBadge",
+      colour: SCENE_COLOURS.emerald,
+      position: [-0.55, 0.15, -0.5],
+      scale: 0.62,
       speed: 7,
     },
     {
-      kind: "icosahedron",
-      colour: SCENE_COLOURS.sky,
-      position: [-0.4, 0.45, -1],
-      scale: 0.7,
-      speed: 9,
-      wireframe: true,
-    },
-    {
-      kind: "sphere",
-      colour: SCENE_COLOURS.fuchsia,
-      position: [1.1, -0.1, 0.2],
-      scale: 0.5,
-      speed: 6,
-    },
-    {
-      kind: "box",
+      model: "pieChart",
       colour: SCENE_COLOURS.amber,
-      position: [2.5, 0.35, -0.6],
-      scale: 0.4,
+      position: [1, 0, 0],
+      rotation: [-0.2, 0.25, 0],
+      scale: 0.66,
       speed: 8,
+    },
+    {
+      model: "milestoneFlag",
+      colour: SCENE_COLOURS.fuchsia,
+      position: [2.6, 0, -0.5],
+      scale: 0.62,
+      speed: 6,
     },
   ],
 };

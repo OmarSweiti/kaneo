@@ -8,8 +8,9 @@ import {
 } from "react";
 import { type Group, PMREMGenerator } from "three";
 import { RoomEnvironment } from "three/examples/jsm/environments/RoomEnvironment.js";
-import { FloatingShape } from "./floating-shape";
-import { type HeroSceneVariant, SCENE_COLOURS, SCENE_SHAPES } from "./shapes";
+import { SCENE_COLOURS } from "./colours";
+import { FloatingModel } from "./floating-model";
+import { type HeroSceneVariant, SCENE_SHAPES } from "./shapes";
 
 // Reflections come from a procedurally built room, so the scene never
 // downloads an HDR environment map from a third-party CDN. The texture lives
@@ -111,8 +112,8 @@ export default function Scene({ variant }: { variant: HeroSceneVariant }) {
         <StudioLighting />
         <ParallaxRig>
           {SCENE_SHAPES[variant].map((shape) => (
-            <FloatingShape
-              key={`${shape.kind}-${shape.position.join(",")}`}
+            <FloatingModel
+              key={`${shape.model}-${shape.position.join(",")}`}
               {...shape}
             />
           ))}

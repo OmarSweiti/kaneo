@@ -1,5 +1,5 @@
 import type { ISourceOptions } from "@tsparticles/engine";
-import { SCENE_COLOURS } from "../hero-scene/shapes";
+import { SCENE_COLOURS } from "../hero-scene/colours";
 
 // The classic particles.js "network": drifting dots joined by faint lines,
 // with lines reaching for the pointer. The canvas sits behind the UI without
