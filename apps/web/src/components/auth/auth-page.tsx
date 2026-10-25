@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import { AmbientBackdrop } from "../effects/ambient-backdrop";
 import { HeroScene } from "../effects/hero-scene";
+import { ParticleField } from "../effects/particle-field";
 import { AuthLegalFooter } from "./auth-legal-footer";
 
 type AuthPageProps = {
@@ -19,6 +20,7 @@ export function AuthPage({
   return (
     <main className="relative isolate h-svh w-full overflow-y-auto bg-background">
       <AmbientBackdrop />
+      <ParticleField className="fixed inset-0 -z-10" />
       <HeroScene variant="auth" className="fixed inset-0 -z-10" />
       <div className="flex min-h-full flex-col items-center">
         <div className="flex w-full grow flex-col items-center justify-center px-4 py-12 sm:px-6">
