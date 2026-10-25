@@ -5,9 +5,10 @@ import {
   loadLocale,
   supportedLocales,
 } from "@i18n/resources";
-import i18n from "i18next";
+import i18n, { type PostProcessorModule } from "i18next";
 import resourcesToBackend from "i18next-resources-to-backend";
 import { initReactI18next } from "react-i18next";
+import { brandText } from "@/lib/brand";
 
 function getLanguageCode(locale: string) {
   return locale.toLowerCase().split("-")[0];
@@ -126,7 +127,14 @@ export function preloadNamespaces(locale: AppLocale): Promise<void> {
 
 const initialLocale = resolveLocale(null, getBrowserLocale());
 
+const brandPostProcessor: PostProcessorModule = {
+  type: "postProcessor",
+  name: "brand",
+  process: (value, key) => brandText(value, key),
+};
+
 void i18n
+  .use(brandPostProcessor)
   .use(
     resourcesToBackend((language: string, namespace: string) => {
       const locale = isSupportedLocale(language) ? language : defaultLocale;
@@ -140,6 +148,7 @@ void i18n
     lng: initialLocale,
     fallbackLng: defaultLocale,
     defaultNS: "common",
+    postProcess: ["brand"],
     interpolation: {
       escapeValue: false,
     },
