@@ -40,7 +40,7 @@ function LayoutHeader({ children, className }: HeaderProps) {
 
 function LayoutContent({ children, className }: ContentProps) {
   return (
-    <div className={cn("flex-1 min-h-0", className)}>
+    <div data-slot="page-content" className={cn("flex-1 min-h-0", className)}>
       <div className="h-full">{children}</div>
     </div>
   );

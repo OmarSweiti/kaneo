@@ -1,0 +1,20 @@
+/* Page transitions: the shared page body and settings pages remount when
+   the route changes, so a mount animation plays on every navigation without
+   forcing a remount (and losing state) itself. Opacity and translate only,
+   so it stays on the compositor. */
+:root[data-effects="full"]
+  :is([data-slot="page-content"], [data-slot="settings-page"]) {
+  animation: effects-page-in 380ms var(--ease-out) backwards;
+}
+
+:root[data-effects="reduced"]
+  :is([data-slot="page-content"], [data-slot="settings-page"]) {
+  animation: effects-fade 200ms var(--ease-out) backwards;
+}
+
+@keyframes effects-page-in {
+  from {
+    opacity: 0;
+    translate: 0 6px;
+  }
+}

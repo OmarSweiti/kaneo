@@ -1,7 +1,8 @@
-/* Decorative effects layer.
-   Motion here only runs under <html data-effects="full">, which the visual
+/* Decorative effects layer, keyed on <html data-effects>, which the visual
    effects preference sets and the OS reduced-motion setting caps at
-   "reduced". Colour stays in index.css so every level keeps the palette. */
+   "reduced". "full" gets all motion, "reduced" only gentle fades, and "off"
+   also hides decorative layers. Colour stays in index.css so every level
+   keeps the palette. */
 @import "./motion-tokens.css";
 @import "./buttons.css";
 @import "./popups.css";
@@ -9,3 +10,4 @@
 @import "./controls.css";
 @import "./board.css";
 @import "./ambient.css";
+@import "./pages.css";
