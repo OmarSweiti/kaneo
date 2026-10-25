@@ -289,6 +289,12 @@ input:-webkit-autofill:active {
     var(--color-sky-600)
   );
   --brand-glow: --alpha(var(--color-violet-500) / 35%);
+  --brand-text-gradient: linear-gradient(
+    120deg,
+    var(--color-violet-600),
+    var(--color-indigo-600) 50%,
+    var(--color-sky-600)
+  );
   --ambient-strength: 9%;
   --column-todo: var(--color-sky-500);
   --column-progress: var(--color-amber-500);
@@ -394,6 +400,12 @@ input:-webkit-autofill:active {
   --aurora-amber: var(--color-amber-400);
   --aurora-emerald: var(--color-emerald-400);
   --brand-glow: --alpha(var(--color-violet-500) / 45%);
+  --brand-text-gradient: linear-gradient(
+    120deg,
+    var(--color-violet-300),
+    var(--color-indigo-300) 50%,
+    var(--color-sky-300)
+  );
   --ambient-strength: 14%;
   --column-todo: var(--color-sky-400);
   --column-progress: var(--color-amber-400);

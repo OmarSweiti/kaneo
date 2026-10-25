@@ -88,14 +88,14 @@ export const SCENE_SHAPES: Record<HeroSceneVariant, ShapeSpec[]> = {
     {
       kind: "torusKnot",
       colour: SCENE_COLOURS.violet,
-      position: [-1.6, 0.1, 0],
+      position: [-2.2, 0.1, 0],
       scale: 0.75,
       speed: 7,
     },
     {
       kind: "icosahedron",
       colour: SCENE_COLOURS.sky,
-      position: [0.6, 0.6, -1],
+      position: [-0.4, 0.45, -1],
       scale: 0.7,
       speed: 9,
       wireframe: true,
@@ -103,14 +103,14 @@ export const SCENE_SHAPES: Record<HeroSceneVariant, ShapeSpec[]> = {
     {
       kind: "sphere",
       colour: SCENE_COLOURS.fuchsia,
-      position: [1.9, -0.4, 0.2],
+      position: [1.1, -0.1, 0.2],
       scale: 0.5,
       speed: 6,
     },
     {
       kind: "box",
       colour: SCENE_COLOURS.amber,
-      position: [0.1, -0.9, 0.6],
+      position: [2.5, 0.35, -0.6],
       scale: 0.4,
       speed: 8,
     },
